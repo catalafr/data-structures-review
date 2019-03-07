@@ -9,7 +9,7 @@ public class TwoSum {
 
         Map<Integer, Integer> holder = new HashMap<>();
         for(int i = 0 ; i< nums.length ; i++){
-            holder.put(i, nums[i]);
+            holder.put(nums[i], i);
         }
 
         int [] result = new int[2];
@@ -19,11 +19,12 @@ public class TwoSum {
             unknown = target - nums[i];
             if(holder.containsKey(unknown)
                     && holder.get(unknown) != i){
-                result[0] = nums[i];
+                result[0] = i;
                 result[1] = holder.get(unknown);
+                break;
             }
         }
 
-        return new int[2];
+        return result;
     }
 }
