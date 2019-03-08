@@ -1,9 +1,6 @@
 package arrays;
 
-import java.util.Arrays;
-
 public class TrappingRainWater {
-
 
     public int trap(int[] height) {
         return findBuckets(height);
@@ -11,34 +8,26 @@ public class TrappingRainWater {
 
     private int findBuckets(int [] height){
 
-        int left = 0;
-        int right = 0;
+        int leftPtr = 0;
+        int rightPtr = height.length - 1;
+        int leftMax = 0;
+        int rightMax = 0;
         int count = 0;
 
-        for(int i = 0 ; i < height.length ; i++){
-            if(height[i] >= 1){
-                left = i;
+        while(leftPtr <= rightPtr){
+            leftMax = Math.max(leftMax, height[leftPtr]);
+            rightMax = Math.max(rightMax, height[rightPtr]);
+            if(leftMax < rightMax){
+                count += leftMax - height[leftPtr];
+                leftPtr++;
             }
-            if(left != 0 && left != i && height[i] >= height[left]){
-                right = i;
-                count = countBetween(Arrays.copyOfRange(height, left, right),
-                        Math.min(height[left], height[right]));
-                left = i;
+            else {
+                count += rightMax - height[rightPtr];
+                rightPtr--;
             }
         }
 
 
         return count;
     }
-
-    private int countBetween(int [] subarray, int min){
-        int count = 0;
-        for(int i : subarray)
-            if(i < min){
-                count += min - i;
-            }
-
-        return count;
-    }
-
 }
